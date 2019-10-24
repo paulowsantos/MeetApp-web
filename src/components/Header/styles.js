@@ -61,6 +61,7 @@ export const Profile = styled.div`
   }
 
   img {
+    margin: 0 10px;
     height: 48px;
     width: 48px;
     border: 2px solid #fff;
