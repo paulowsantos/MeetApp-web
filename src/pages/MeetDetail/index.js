@@ -1,12 +1,15 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { MdEdit, MdDeleteForever, MdEvent, MdLocationOn } from 'react-icons/md';
 import { format, parseISO } from 'date-fns';
 import ca from 'date-fns/locale/en-CA';
+import { toast } from 'react-toastify';
 
 import api from '../../services/api';
+import history from '../../services/history';
 import {
   Container,
   Header,
@@ -18,21 +21,24 @@ import {
   DescText,
 } from './styles';
 import defaultBanner from '../../assets/Bitmap.png';
+import { changeMeet } from '../../store/modules/meet/actions';
 
 export default function MeetDetail({ match }) {
+  const dispatch = useDispatch();
+  const page = useSelector(state => state.meet.page);
   const { meet } = match.params;
   const [myMeets, setMyMeets] = useState([]);
   const [chooseMeet, setChooseMeet] = useState();
 
+  async function loadMyMeets(pg) {
+    const response = await api.get(`meetups?page=${pg}`);
+
+    setMyMeets(response.data);
+  }
+
   useEffect(() => {
-    async function loadMyMeets() {
-      const response = await api.get('meetups');
-
-      setMyMeets(response.data);
-    }
-
-    loadMyMeets();
-  }, []);
+    loadMyMeets(page);
+  }, [page]);
 
   useEffect(() => {
     const cItem = myMeets.find(item => Number(item.id) === Number(meet));
@@ -42,6 +48,23 @@ export default function MeetDetail({ match }) {
   function FormatDate(dateF) {
     const newDate = parseISO(dateF);
     return format(newDate, "MMM do '-' hh:mma", { locale: ca });
+  }
+
+  async function handleCancel(id) {
+    try {
+      const meetid = { id };
+
+      await api.delete('/meetups', { data: meetid });
+
+      dispatch(changeMeet());
+
+      toast.success('Registration canceld.');
+
+      history.push('/mymeets');
+    } catch (err) {
+      console.tron.log(err);
+      toast.error(`Error: ${err.message}`);
+    }
   }
 
   return (
@@ -55,13 +78,18 @@ export default function MeetDetail({ match }) {
               <span>Edit</span>
             </EditButton>
           </Link>
-          <CancelButton>
+          <CancelButton onClick={() => handleCancel(chooseMeet.id)}>
             <MdDeleteForever size={25} />
             <span>Cancel</span>
           </CancelButton>
         </div>
       </Header>
-      <Banner src={defaultBanner} />
+      <Banner
+        src={
+          (chooseMeet && chooseMeet.banner && chooseMeet.banner.url) ||
+          defaultBanner
+        }
+      />
       <Infos>
         <DescText>{chooseMeet && chooseMeet.description}</DescText>
         <div>

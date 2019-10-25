@@ -61,11 +61,7 @@ export default function Registrations() {
         {myMeets.map(item => (
           <Meet past={item.Meetup.past}>
             <Banner
-              src={
-                item.Meetup.banner
-                  ? { uri: item.Meetup.banner.url }
-                  : defaultBanner
-              }
+              src={item.Meetup.banner ? item.Meetup.banner.url : defaultBanner}
             />
             <Infos>
               <Title>{item.Meetup.title}</Title>

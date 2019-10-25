@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   background: #191621;
+  width: 100%;
   padding: 0 30px;
+  position: fixed;
 `;
 
 export const Content = styled.div`

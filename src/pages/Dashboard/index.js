@@ -1,23 +1,41 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {
+  MdPeople,
+  MdSearch,
+  MdAssignment,
+  MdAddCircleOutline,
+} from 'react-icons/md';
 
-// import { Container } from './styles';
+import { Container, Card } from './styles';
 
 export default function Dashboard() {
   return (
-    <div>
+    <Container>
       <Link to="/searchmeets">
-        <button type="button">Seach Meets</button>
+        <Card>
+          <MdSearch size={60} />
+          <span>Seach Meets</span>
+        </Card>
       </Link>
       <Link to="/mymeets">
-        <button type="button">My Meets</button>
-      </Link>
-      <Link to="/newmeet">
-        <button type="button">New Meet</button>
+        <Card>
+          <MdPeople size={60} />
+          <span>My Meetups</span>
+        </Card>
       </Link>
       <Link to="/registrations">
-        <button type="button">Registrations</button>
+        <Card>
+          <MdAssignment size={60} />
+          <span>Registrations</span>
+        </Card>
       </Link>
-    </div>
+      <Link to="/newmeet">
+        <Card>
+          <MdAddCircleOutline size={60} />
+          <span>New Meetup</span>
+        </Card>
+      </Link>
+    </Container>
   );
 }

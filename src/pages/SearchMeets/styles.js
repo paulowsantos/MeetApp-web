@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   max-width: 900px;
-  margin: 50px auto;
+  margin: 110px auto;
   display: flex;
   flex-direction: column;
 
@@ -29,7 +29,6 @@ export const Container = styled.div`
 `;
 
 export const Meet = styled.li`
-  flex-direction: column;
   margin: 10px 0;
   border-radius: 4px;
   background: #fff;
@@ -55,10 +54,18 @@ export const Title = styled.span`
   margin-bottom: 20px;
 `;
 
+export const Desc = styled.div`
+  white-space: pre-wrap;
+  font-size: 16px;
+  margin-bottom: 20px;
+  margin-left: 5px;
+  color: rgba(0, 0, 0, 0.6);
+`;
+
 export const InfoInfo = styled.div`
   flex-direction: row;
   align-items: center;
-  padding: 10px 10px;
+  padding: 10px;
 `;
 
 export const InfoText = styled.span`
@@ -68,12 +75,10 @@ export const InfoText = styled.span`
 `;
 
 export const RegisterButton = styled.button`
-  /* display: flex; */
-  width: 97%;
+  width: 97.5%;
   background: #f64c75;
   border: 0;
   margin: 10px;
-  /* margin-top: 0; */
   height: 46px;
   border-radius: 4px;
   align-items: center;

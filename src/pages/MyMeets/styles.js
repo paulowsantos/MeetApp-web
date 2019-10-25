@@ -2,9 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   max-width: 900px;
-  margin: 50px auto;
-  display: flex;
-  flex-direction: column;
+  margin: 110px auto;
 `;
 
 export const Header = styled.div`
@@ -18,7 +16,6 @@ export const Header = styled.div`
 export const Title = styled.span`
   font-size: 28px;
   color: #fff;
-  /* align-self: flex-start; */
 `;
 
 export const NewButton = styled.button`
@@ -37,11 +34,6 @@ export const NewButton = styled.button`
   span {
     margin-left: 10px;
   }
-`;
-
-export const MeetList = styled.ul`
-  flex: 1;
-  margin-top: 20px;
 `;
 
 export const Meet = styled.li`
@@ -70,6 +62,25 @@ export const Meet = styled.li`
       font-size: 16px;
       color: rgba(255, 255, 255, 0.6);
       margin-right: 20px;
+    }
+  }
+`;
+
+export const Paging = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    display: flex;
+    background: none;
+    border: 0;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    align-items: center;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
     }
   }
 `;

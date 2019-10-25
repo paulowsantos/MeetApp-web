@@ -3,7 +3,7 @@ import { darken } from 'polished';
 
 export const Container = styled.div`
   max-width: 900px;
-  margin: 50px auto;
+  margin: 110px auto;
 
   form {
     display: flex;
@@ -19,6 +19,7 @@ export const Container = styled.div`
       color: #fff;
       margin: 0 0 10px;
       resize: none;
+      font: 14px 'Roboto', sans-serif;
 
       &::placeholder {
         color: #fff;
@@ -26,7 +27,7 @@ export const Container = styled.div`
       }
     }
 
-    input {
+    input.regular {
       background: rgba(0, 0, 0, 0.1);
       border: 0;
       border-radius: 4px;
@@ -47,7 +48,7 @@ export const Container = styled.div`
       margin: 10px 0 20px;
     }
 
-    button {
+    button.save {
       width: 15%;
       display: flex;
       align-self: flex-end;
@@ -65,6 +66,49 @@ export const Container = styled.div`
 
       &:hover {
         background: ${darken(0.05, '#E5556E')};
+      }
+    }
+
+    .datepicker {
+      /* width: 60px; */
+      /* max-width: 900px;
+      width: 100%; */
+      div {
+        border: 0;
+      }
+
+      button {
+        /* background: #7159c1; */
+        svg {
+          &:hover {
+            stroke: #e5556e;
+            color: #e5556e;
+          }
+        }
+      }
+
+      input {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        height: 44px;
+        padding: 0 20px;
+        color: #fff;
+        margin-bottom: 30px;
+        /* width: 100px; */
+      }
+
+      span {
+        color: #fff;
+        font-size: 20px;
+        padding: 0 5px;
+      }
+
+      select {
+        color: #fff;
+
+        option {
+          color: #000;
+        }
       }
     }
   }

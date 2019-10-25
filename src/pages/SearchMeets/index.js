@@ -21,6 +21,7 @@ import {
   Banner,
   Infos,
   Title,
+  Desc,
   InfoInfo,
   InfoText,
   RegisterButton,
@@ -98,11 +99,10 @@ export default function SearchMeets() {
       <ul>
         {meets.map(item => (
           <Meet past={item.past}>
-            <Banner
-              src={item.banner ? { uri: item.banner.url } : defaultBanner}
-            />
+            <Banner src={item.banner ? item.banner.url : defaultBanner} />
             <Infos>
               <Title>{item.title}</Title>
+              <Desc>{item.description}</Desc>
               <InfoInfo>
                 <MdEvent size={15} color="#999" />
                 <InfoText>{FormatDate(item.date)}</InfoText>
@@ -116,7 +116,10 @@ export default function SearchMeets() {
                 <InfoText>Organizer: {item.User.name}</InfoText>
               </InfoInfo>
             </Infos>
-            <RegisterButton onClick={() => handleReg(item.id)}>
+            <RegisterButton
+              onClick={() => handleReg(item.id)}
+              disabled={item.past}
+            >
               <TextButton>Register</TextButton>
             </RegisterButton>
           </Meet>

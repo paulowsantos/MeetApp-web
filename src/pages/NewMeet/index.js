@@ -8,15 +8,22 @@ import PropTypes from 'prop-types';
 import { format, parseISO } from 'date-fns';
 import ca from 'date-fns/locale/en-CA';
 import { toast } from 'react-toastify';
+import DateTimePicker from 'react-datetime-picker';
 
 import BannerInput from './BannerInput';
 import api from '../../services/api';
+import history from '../../services/history';
 import { Container } from './styles';
-import { changeMeet } from '../../store/modules/meet/actions';
+import { changeMeet, saveBanner } from '../../store/modules/meet/actions';
 
 export default function NewMeet({ match }) {
   const dispatch = useDispatch();
   const { meet } = match.params;
+
+  const [titleForm, setTitleForm] = useState('');
+  const [descForm, setDescForm] = useState('');
+  const [dateForm, setDateForm] = useState('');
+  const [localForm, setLocalForm] = useState('');
 
   const [myMeets, setMyMeets] = useState([]);
   const [chooseMeet, setChooseMeet] = useState();
@@ -27,7 +34,7 @@ export default function NewMeet({ match }) {
 
       setMyMeets(response.data);
     }
-
+    // console.tron.log(ca);
     loadMyMeets();
   }, []);
 
@@ -46,27 +53,33 @@ export default function NewMeet({ match }) {
   }, [meet, myMeets]);
 
   async function handleSubmit(data) {
-    console.tron.log(data);
     try {
-      const { title, description, localization, date, banner_id } = data;
+      const { title, description, localization, banner_id } = data;
+
+      const fmtDate = format(dateForm, "yyyy'-'MM'-'dd'T'HH:mm:ss'-08:00'", {
+        locale: ca,
+      });
 
       const submitMeet = {
         id: meet,
         title,
         description,
         localization,
-        date,
+        date: fmtDate,
         banner_id,
       };
-      console.tron.log(submitMeet);
 
       if (meet) {
-        console.tron.log('put');
         await api.put('/meetups', submitMeet);
+        history.push(`/mymeets/${meet}`);
         toast.success('Meetup successfuly updated.');
       } else {
-        console.tron.log('post');
         await api.post('/meetups', submitMeet);
+        setTitleForm('');
+        setDescForm('');
+        setDateForm('');
+        setLocalForm('');
+        dispatch(saveBanner(false));
         toast.success('Meetup successfuly created.');
       }
 
@@ -76,17 +89,60 @@ export default function NewMeet({ match }) {
     }
   }
 
+  function handleTitleChange(e) {
+    setTitleForm(e.target.value);
+  }
+
+  function handleDescChange(e) {
+    setDescForm(e.target.value);
+  }
+
+  function handleDateChange(date) {
+    console.tron.log(date);
+    const testdate = new Date(2019, 10, 31, 15, 0);
+    // const fmtDate = format(date, 'z');
+    console.tron.log(testdate);
+    setDateForm(date);
+  }
+
+  function handleLocalChange(e) {
+    setLocalForm(e.target.value);
+  }
+
   return (
     <Container>
       <Form initialData={chooseMeet} onSubmit={handleSubmit}>
         <BannerInput name="banner_id" />
 
-        <Input name="title" placeholder="Meetup Title" />
-        <Input name="description" placeholder="Description" multiline />
-        <Input name="date" placeholder="Meetup Date" />
-        <Input name="localization" placeholder="Location" />
+        <Input
+          className="regular"
+          name="title"
+          placeholder="Meetup Title"
+          value={titleForm}
+          onChange={handleTitleChange}
+        />
+        <Input
+          className="regular"
+          name="description"
+          placeholder="Description"
+          multiline
+          value={descForm}
+          onChange={handleDescChange}
+        />
+        <DateTimePicker
+          onChange={handleDateChange}
+          value={dateForm}
+          className="datepicker"
+        />
+        <Input
+          className="regular"
+          name="localization"
+          placeholder="Location"
+          value={localForm}
+          onChange={handleLocalChange}
+        />
 
-        <button type="submit">
+        <button type="submit" className="save">
           <MdAddCircleOutline size={25} style={{ marginRight: '6px' }} />
           Save
         </button>
