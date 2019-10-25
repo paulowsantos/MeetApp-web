@@ -8,9 +8,11 @@ import SignUp from '../pages/SignUp';
 
 import Dashboard from '../pages/Dashboard';
 import MyMeets from '../pages/MyMeets';
+import MeetDetail from '../pages/MeetDetail';
 import NewMeet from '../pages/NewMeet';
 import Profile from '../pages/Profile';
 import SearchMeets from '../pages/SearchMeets';
+import Registrations from '../pages/Registrations';
 
 export default function Routes() {
   return (
@@ -19,10 +21,13 @@ export default function Routes() {
       <Route path="/register" component={SignUp} />
 
       <Route path="/dashboard" component={Dashboard} isPrivate />
-      <Route path="/mymeets" component={MyMeets} isPrivate />
-      <Route path="/newmeet" component={NewMeet} isPrivate />
+      <Route path="/mymeets" exact component={MyMeets} isPrivate />
+      <Route path="/mymeets/:meet" component={MeetDetail} isPrivate />
+      <Route path="/newmeet" exact component={NewMeet} isPrivate />
+      <Route path="/newmeet/:meet" component={NewMeet} isPrivate />
       <Route path="/profile" component={Profile} isPrivate />
       <Route path="/searchmeets" component={SearchMeets} isPrivate />
+      <Route path="/registrations" component={Registrations} isPrivate />
     </Switch>
   );
 }

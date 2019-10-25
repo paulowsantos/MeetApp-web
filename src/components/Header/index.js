@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Notifications from '../Notifications';
 import { signOut } from '../../store/modules/auth/actions';
 
-import logo from '../../assets/M.svg';
+import logo from '../../assets/logo.png';
 
 import { Container, Content, Profile } from './styles';
 
@@ -22,7 +22,7 @@ export default function Header() {
       <Content>
         <nav>
           <Link to="/dashboard">
-            <img src={logo} alt="MeetApp" />
+            <img src={logo} alt="MeetApp" style={{ height: 50 }} />
           </Link>
         </nav>
 

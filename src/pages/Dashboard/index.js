@@ -15,6 +15,9 @@ export default function Dashboard() {
       <Link to="/newmeet">
         <button type="button">New Meet</button>
       </Link>
+      <Link to="/registrations">
+        <button type="button">Registrations</button>
+      </Link>
     </div>
   );
 }

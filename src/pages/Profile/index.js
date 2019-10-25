@@ -35,7 +35,7 @@ export default function Profile() {
         />
 
         <button type="submit">
-          <MdAddCircleOutline size={20} style={{ marginRight: '6px' }} />
+          <MdAddCircleOutline size={25} style={{ marginRight: '6px' }} />
           Save
         </button>
       </Form>

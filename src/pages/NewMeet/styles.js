@@ -10,6 +10,22 @@ export const Container = styled.div`
     flex-direction: column;
     margin-top: 30px;
 
+    textarea {
+      background: rgba(0, 0, 0, 0.1);
+      border: 0;
+      border-radius: 4px;
+      height: 200px;
+      padding: 15px 15px;
+      color: #fff;
+      margin: 0 0 10px;
+      resize: none;
+
+      &::placeholder {
+        color: #fff;
+        font: 14px 'Roboto', sans-serif;
+      }
+    }
+
     input {
       background: rgba(0, 0, 0, 0.1);
       border: 0;
