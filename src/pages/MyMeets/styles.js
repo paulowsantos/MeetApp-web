@@ -82,5 +82,14 @@ export const Paging = styled.div`
     &:hover {
       background: rgba(255, 255, 255, 0.2);
     }
+
+    &[disabled] {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    &[disabled]:hover {
+      background: none;
+    }
   }
 `;

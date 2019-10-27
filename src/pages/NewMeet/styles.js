@@ -22,7 +22,7 @@ export const Container = styled.div`
       font: 14px 'Roboto', sans-serif;
 
       &::placeholder {
-        color: #fff;
+        color: rgba(255, 255, 255, 0.5);
         font: 14px 'Roboto', sans-serif;
       }
     }
@@ -37,7 +37,7 @@ export const Container = styled.div`
       margin: 0 0 10px;
 
       &::placeholder {
-        color: rgba(255, 255, 255, 0.7);
+        color: rgba(255, 255, 255, 0.5);
       }
     }
 

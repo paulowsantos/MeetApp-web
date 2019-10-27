@@ -2,7 +2,7 @@
 /* eslint-disable react/require-default-props */
 import React, { useEffect, useState } from 'react';
 import { Form, Input } from '@rocketseat/unform';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MdAddCircleOutline } from 'react-icons/md';
 import PropTypes from 'prop-types';
 import { format, parseISO } from 'date-fns';
@@ -19,6 +19,7 @@ import { changeMeet, saveBanner } from '../../store/modules/meet/actions';
 export default function NewMeet({ match }) {
   const dispatch = useDispatch();
   const { meet } = match.params;
+  const page = useSelector(state => state.meet.page);
 
   const [titleForm, setTitleForm] = useState('');
   const [descForm, setDescForm] = useState('');
@@ -29,27 +30,30 @@ export default function NewMeet({ match }) {
   const [chooseMeet, setChooseMeet] = useState();
 
   useEffect(() => {
-    async function loadMyMeets() {
-      const response = await api.get('meetups');
+    async function loadMyMeets(pg) {
+      const response = await api.get('meetups', {
+        params: { page: pg },
+      });
 
-      setMyMeets(response.data);
+      setMyMeets(response.data.rows);
     }
-    // console.tron.log(ca);
-    loadMyMeets();
-  }, []);
+    loadMyMeets(page);
+  }, [page]);
 
-  function FormatDate(dateF) {
-    const newDate = parseISO(dateF);
-    return format(newDate, "MMM do '-' hh:mma", { locale: ca });
-  }
+  // function FormatDate(dateF) {
+  //   const newDate = parseISO(dateF);
+  //   return format(newDate, "MMM do '-' hh:mma", { locale: ca });
+  // }
 
   useEffect(() => {
     const cItem = myMeets.find(item => Number(item.id) === Number(meet));
-    const dateF = cItem && FormatDate(cItem.date);
-    setChooseMeet({
-      ...cItem,
-      date: dateF,
-    });
+    // const dateF = cItem && FormatDate(cItem.date);
+    setChooseMeet(cItem);
+    if (cItem) {
+      setTitleForm(cItem.title);
+      setDescForm(cItem.description);
+      setLocalForm(cItem.localization);
+    }
   }, [meet, myMeets]);
 
   async function handleSubmit(data) {
@@ -98,10 +102,6 @@ export default function NewMeet({ match }) {
   }
 
   function handleDateChange(date) {
-    console.tron.log(date);
-    const testdate = new Date(2019, 10, 31, 15, 0);
-    // const fmtDate = format(date, 'z');
-    console.tron.log(testdate);
     setDateForm(date);
   }
 

@@ -31,9 +31,11 @@ export default function MeetDetail({ match }) {
   const [chooseMeet, setChooseMeet] = useState();
 
   async function loadMyMeets(pg) {
-    const response = await api.get(`meetups?page=${pg}`);
+    const response = await api.get('meetups', {
+      params: { page: pg },
+    });
 
-    setMyMeets(response.data);
+    setMyMeets(response.data.rows);
   }
 
   useEffect(() => {
@@ -63,7 +65,7 @@ export default function MeetDetail({ match }) {
       history.push('/mymeets');
     } catch (err) {
       console.tron.log(err);
-      toast.error(`Error: ${err.message}`);
+      toast.error("Error: You can't canel this Meetup.");
     }
   }
 

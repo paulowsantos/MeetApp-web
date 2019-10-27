@@ -16,16 +16,25 @@ import { Container, Header, Title, NewButton, Meet, Paging } from './styles';
 export default function MyMeets() {
   const dispatch = useDispatch();
   const [myMeets, setMyMeets] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
   const page = useSelector(state => state.meet.page);
 
-  async function loadMyMeets(pg) {
-    const response = await api.get(`meetups?page=${pg}`);
+  async function loadMyMeets(pg = page) {
+    if (totalPages && pg > totalPages) return;
 
-    setMyMeets(response.data);
+    const response = await api.get('meetups', {
+      params: { page: pg },
+    });
+
+    setTotalPages(Math.ceil(response.data.count / 10));
+
+    setMyMeets(response.data.rows);
+
+    dispatch(changePage(pg));
   }
 
   useEffect(() => {
-    loadMyMeets(page);
+    loadMyMeets();
   }, []); // eslint-disable-line
 
   function FormatDate(dateF) {
@@ -38,13 +47,11 @@ export default function MyMeets() {
     if (newPage < 1) {
       return;
     }
-    dispatch(changePage(newPage));
     loadMyMeets(newPage);
   }
 
   function handleNextClick() {
     const newPage = page + 1;
-    dispatch(changePage(newPage));
     loadMyMeets(newPage);
   }
 
@@ -73,10 +80,14 @@ export default function MyMeets() {
         ))}
       </ul>
       <Paging>
-        <button type="button" onClick={handlePrevClick}>
+        <button type="button" onClick={handlePrevClick} disabled={page === 1}>
           <MdChevronLeft size={30} color="#FFF" />
         </button>
-        <button type="button" onClick={handleNextClick}>
+        <button
+          type="button"
+          onClick={handleNextClick}
+          disabled={page === totalPages}
+        >
           <MdChevronRight size={30} color="#FFF" />
         </button>
       </Paging>
