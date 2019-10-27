@@ -5,7 +5,7 @@ import { Form, Input } from '@rocketseat/unform';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdAddCircleOutline } from 'react-icons/md';
 import PropTypes from 'prop-types';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import ca from 'date-fns/locale/en-CA';
 import { toast } from 'react-toastify';
 import DateTimePicker from 'react-datetime-picker';
