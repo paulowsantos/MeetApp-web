@@ -6,6 +6,7 @@ import Notifications from '../Notifications';
 import { signOut } from '../../store/modules/auth/actions';
 
 import logo from '../../assets/logo.png';
+import defaulAvatar from '../../assets/avatar.jpg';
 
 import { Container, Content, Profile } from './styles';
 
@@ -35,11 +36,7 @@ export default function Header() {
               <Link to="/profile">My profile</Link>
             </div>
             <img
-              src={
-                profile.avatar
-                  ? profile.avatar.url
-                  : 'https://api.adorable.io/avatars/50/abott@adorable.png'
-              }
+              src={profile.avatar ? profile.avatar.url : defaulAvatar}
               alt="Paulo Wayner"
             />
             <button type="button" onClick={handleSignOut}>
